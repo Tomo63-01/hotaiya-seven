@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>布袋屋SEVEN | ライツクリアランス</title>
+<style>
+  :root{
+    --navy:#0a2a52;
+    --navy-2:#0f3a70;
+    --gold:#e07a1f;
+    --gold-light:#f5a04a;
+    --bg:#f5f6f8;
+    --text:#23303f;
+    --text-soft:#5b6472;
+    --white:#ffffff;
+    --border:#dde2e8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,"Segoe UI",sans-serif;
+    color:var(--text);
+    background:var(--bg);
+    line-height:1.8;
+  }
+  img{max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+
+  /* Header */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(21,34,56,0.96);
+    backdrop-filter:blur(6px);
+  }
+  .nav-wrap{
+    max-width:1140px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-size:1.25rem;font-weight:700;color:var(--white);
+    letter-spacing:.02em;
+  }
+  .logo-mark{
+    width:36px;height:36px;border-radius:9px;background:#fdfbf6;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .logo-mark svg{width:24px;height:24px;display:block;}
+  .logo .brand-sub{font-size:.65rem;font-weight:400;color:var(--gold-light);letter-spacing:.15em;display:block;}
+  nav ul{display:flex;gap:32px;}
+  nav a{
+    color:#dfe4ec;font-size:.92rem;font-weight:500;
+    padding:6px 2px;border-bottom:2px solid transparent;
+    transition:border-color .2s, color .2s;
+  }
+  nav a:hover{color:var(--gold-light);border-color:var(--gold-light);}
+  .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+  .nav-toggle span{width:24px;height:2px;background:var(--white);display:block;}
+
+  @media (max-width:860px){
+    nav{
+      position:fixed;top:64px;left:0;right:0;
+      background:var(--navy-2);
+      max-height:0;overflow:hidden;
+      transition:max-height .3s ease;
+    }
+    nav.open{max-height:400px;}
+    nav ul{flex-direction:column;gap:0;padding:8px 24px 20px;}
+    nav a{display:block;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+    .nav-toggle{display:flex;}
+  }
+
+  /* Hero */
+  .hero{
+    padding:150px 24px 100px;
+    background:linear-gradient(160deg,var(--navy) 0%,var(--navy-2) 55%,#2a4470 100%);
+    color:var(--white);
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;inset:0;
+    background:radial-gradient(circle at 80% 20%, rgba(201,162,39,0.18), transparent 55%);
+    pointer-events:none;
+  }
+  .hero-inner{max-width:760px;margin:0 auto;position:relative;}
+  .eyebrow{
+    display:inline-block;color:var(--gold-light);font-size:.85rem;
+    letter-spacing:.2em;font-weight:600;margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(1.8rem,4vw,2.7rem);
+    font-weight:700;line-height:1.5;margin-bottom:20px;
+  }
+  .hero h1 em{color:var(--gold-light);font-style:normal;}
+  .hero p{color:#c7cedb;font-size:1.02rem;max-width:600px;margin:0 auto 36px;}
+  .btn{
+    display:inline-block;padding:15px 38px;border-radius:4px;
+    font-weight:700;font-size:.95rem;letter-spacing:.05em;
+    transition:transform .2s, box-shadow .2s;
+  }
+  .btn-gold{background:var(--gold);color:var(--navy);}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(201,162,39,.35);}
+  .btn-outline{border:1px solid rgba(255,255,255,.5);color:var(--white);margin-left:14px;}
+  .btn-outline:hover{background:rgba(255,255,255,.08);}
+
+  /* Sections */
+  section{padding:96px 24px;}
+  .section-inner{max-width:1080px;margin:0 auto;}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 56px;}
+  .section-head .eyebrow{color:var(--gold);}
+  .section-head h2{font-size:clamp(1.5rem,3vw,2rem);color:var(--navy);margin-bottom:14px;}
+  .section-head p{color:var(--text-soft);}
+
+  .alt-bg{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+
+  /* Service cards */
+  .grid-services{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:24px;
+  }
+  .card{
+    background:var(--white);border:1px solid var(--border);border-radius:8px;
+    padding:32px 26px;transition:box-shadow .25s, transform .25s;
+  }
+  .card:hover{box-shadow:0 16px 32px rgba(21,34,56,.08);transform:translateY(-4px);}
+  .card .icon{
+    width:52px;height:52px;border-radius:10px;
+    background:linear-gradient(135deg,var(--navy),var(--navy-2));
+    display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  }
+  .card .icon svg{width:26px;height:26px;stroke:var(--gold-light);}
+  .card h3{font-size:1.05rem;color:var(--navy);margin-bottom:10px;}
+  .card p{color:var(--text-soft);font-size:.92rem;}
+
+  /* Process */
+  .steps{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:0;position:relative;
+  }
+  .step{position:relative;padding:0 16px;text-align:center;}
+  .step .num{
+    width:46px;height:46px;border-radius:50%;
+    background:var(--navy);color:var(--gold-light);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;margin:0 auto 16px;font-size:1.1rem;
+  }
+  .step h4{color:var(--navy);font-size:.98rem;margin-bottom:8px;}
+  .step p{color:var(--text-soft);font-size:.85rem;}
+
+  /* Why us */
+  .why-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:28px;
+  }
+  .why-item{display:flex;gap:16px;}
+  .why-item .mark{
+    flex-shrink:0;width:36px;height:36px;border-radius:50%;
+    background:var(--gold);color:var(--navy);font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .why-item h4{color:var(--navy);margin-bottom:6px;font-size:1rem;}
+  .why-item p{color:var(--text-soft);font-size:.9rem;}
+
+  /* Company info */
+  .company-wrap{
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;
+  }
+  @media (max-width:760px){.company-wrap{grid-template-columns:1fr;}}
+  .company-wrap-single{
+    grid-template-columns:1fr;max-width:600px;margin:0 auto;
+  }
+  table.info-table{width:100%;border-collapse:collapse;}
+  table.info-table th, table.info-table td{
+    text-align:left;padding:14px 12px;border-bottom:1px solid var(--border);
+    font-size:.92rem;vertical-align:top;
+  }
+  table.info-table th{color:var(--navy);width:110px;font-weight:600;}
+  table.info-table td{color:var(--text-soft);}
+  .note{font-size:.78rem;color:#b3691a;margin-top:10px;}
+
+  /* Contact */
+  .contact-wrap{max-width:640px;margin:0 auto;background:var(--white);
+    border:1px solid var(--border);border-radius:10px;padding:44px 36px;}
+  .form-row{margin-bottom:20px;}
+  .form-row label{display:block;font-size:.85rem;font-weight:600;color:var(--navy);margin-bottom:7px;}
+  .form-row input, .form-row select, .form-row textarea{
+    width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:5px;
+    font-size:.92rem;font-family:inherit;background:#fbfaf7;
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus{
+    outline:none;border-color:var(--gold);background:var(--white);
+  }
+  .form-row textarea{min-height:130px;resize:vertical;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:520px){.two-col{grid-template-columns:1fr;}}
+  .submit-btn{
+    width:100%;padding:15px;background:var(--navy);color:var(--white);
+    border:none;border-radius:5px;font-size:.98rem;font-weight:700;cursor:pointer;
+    transition:background .2s;
+  }
+  .submit-btn:hover{background:var(--navy-2);}
+  .form-note{font-size:.78rem;color:var(--text-soft);margin-top:14px;text-align:center;}
+  #formMsg{display:none;margin-bottom:18px;padding:12px 14px;border-radius:5px;font-size:.88rem;}
+  #formMsg.show{display:block;}
+  #formMsg.ok{background:#eef7ee;color:#2e6b2e;border:1px solid #c9e5c9;}
+
+  /* Footer */
+  footer{background:var(--navy);color:#aab3c2;padding:48px 24px 28px;}
+  .footer-inner{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;}
+  .footer-brand{color:var(--white);font-weight:700;margin-bottom:8px;}
+  .footer-links{display:flex;gap:24px;flex-wrap:wrap;}
+  .footer-links a{font-size:.85rem;}
+  .footer-links a:hover{color:var(--gold-light);}
+  .copyright{text-align:center;font-size:.78rem;color:#6c7688;margin-top:36px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="52" x2="50" y2="12" stroke="#e07a1f" stroke-width="3.2"/>
+          <line x1="50" y1="52" x2="81.3" y2="27" stroke="#e07a1f" stroke-width="3.2"/>
+          <line x1="50" y1="52" x2="89" y2="60.9" stroke="#e07a1f" stroke-width="3.2"/>
+          <line x1="50" y1="52" x2="67.3" y2="88.1" stroke="#e07a1f" stroke-width="3.2"/>
+          <line x1="50" y1="52" x2="32.7" y2="88.1" stroke="#e07a1f" stroke-width="3.2"/>
+          <line x1="50" y1="52" x2="11" y2="60.9" stroke="#e07a1f" stroke-width="3.2"/>
+          <line x1="50" y1="52" x2="18.7" y2="27" stroke="#e07a1f" stroke-width="3.2"/>
+          <path d="M50,20 C42,20 36,26 36,33 C36,37 38,40 41,42 C24,47 14,62 14,78 C14,81 16,83 19,83 L81,83 C84,83 86,81 86,78 C86,62 76,47 59,42 C62,40 64,37 64,33 C64,26 58,20 50,20 Z" fill="#0a2a52"/>
+          <circle cx="50" cy="12" r="5.4" fill="#e07a1f"/>
+          <circle cx="81.3" cy="27" r="5.4" fill="#e07a1f"/>
+          <circle cx="89" cy="60.9" r="5.4" fill="#e07a1f"/>
+          <circle cx="67.3" cy="88.1" r="5.4" fill="#e07a1f"/>
+          <circle cx="32.7" cy="88.1" r="5.4" fill="#e07a1f"/>
+          <circle cx="11" cy="60.9" r="5.4" fill="#e07a1f"/>
+          <circle cx="18.7" cy="27" r="5.4" fill="#e07a1f"/>
+        </svg>
+      </span>
+      <span>布袋屋SEVEN<span class="brand-sub">RIGHTS &amp; NEW BUSINESS</span></span>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="#pillars">事業内容</a></li>
+        <li><a href="#service">ライツクリアランス</a></li>
+        <li><a href="#newbiz">新規事業開発</a></li>
+        <li><a href="#flow">ご利用の流れ</a></li>
+        <li><a href="#why">選ばれる理由</a></li>
+        <li><a href="#company">会社情報</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">RIGHTS CLEARANCE &amp; NEW BUSINESS DEVELOPMENT</span>
+    <h1>権利をクリアにし、<br><em>コンテンツ・IPを事業に変える</em>。</h1>
+    <p>布袋屋SEVENは、広告・販促に使う人物写真・映像・美術品・キャラクター・商標などの権利者交渉を代行する「ライツクリアランス」と、コンテンツ・IPを活用した新規事業の立ち上げ・運用設計を支援する「新規事業開発」の2つの事業を展開しています。</p>
+    <a href="#contact" class="btn btn-gold">無料相談・お見積り</a>
+    <a href="#pillars" class="btn btn-outline">事業内容を見る</a>
+  </div>
+</section>
+
+<section id="pillars" class="alt-bg">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">TWO PILLARS</span>
+      <h2>事業内容</h2>
+      <p>「権利をクリアにする力」と「コンテンツ・IPを事業化する力」の両輪で事業者様を支援します。</p>
+    </div>
+    <div class="grid-services" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/><path d="M9 13h6M9 17h6"/></svg></div>
+        <h3>ライツクリアランス</h3>
+        <p>広告・販促で使いたい人物写真・映像・美術品・キャラクター・商標などについて、事業主様に代わり権利者交渉を行い、利用許諾を取得します。</p>
+        <p style="margin-top:14px;"><a href="#service" style="color:var(--navy);font-weight:700;font-size:.88rem;">詳しく見る →</a></p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 11-14h-7z"/></svg></div>
+        <h3>新規事業開発</h3>
+        <p>コンテンツ・IPを活用した新規事業について、企画立案から立ち上げ、運用体制の設計までを一貫して支援します。</p>
+        <p style="margin-top:14px;"><a href="#newbiz" style="color:var(--navy);font-weight:700;font-size:.88rem;">詳しく見る →</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="service">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">SERVICE 01</span>
+      <h2>ライツクリアランス</h2>
+      <p>権利の種類ごとに専門知識を要するクリアランス業務を、まとめてお任せいただけます。</p>
+    </div>
+    <div class="grid-services">
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+        <h3>肖像権クリアランス</h3>
+        <p>広告・商品パッケージ等に使用する人物写真・映像について、本人または所属事務所との利用許諾交渉を代行します。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 16l4-4 3 3 5-6 4 5"/></svg></div>
+        <h3>著作権クリアランス</h3>
+        <p>美術品・イラスト・写真・デザイン等の著作物を利用する際の、著作権者への許諾申請と条件交渉を行います。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12l-8 8-9-9V4h7z"/><circle cx="7.5" cy="7.5" r="1"/></svg></div>
+        <h3>商標・ブランド名利用許諾</h3>
+        <p>他社の商標・ブランド名・ロゴをコラボ企画や販促物に使用する際のライセンス契約締結をサポートします。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a3 3 0 106 0 3 3 0 00-6 0z"/><path d="M4 4h16v16H4z"/></svg></div>
+        <h3>キャラクター・IPライセンス交渉</h3>
+        <p>アニメ・ゲーム・企業キャラクター等のIPホルダーとのライセンス交渉、使用範囲・期間の条件調整を行います。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2l1.5 4h9L18 2"/><path d="M3.5 6h17l-1 14a2 2 0 01-2 2H6.5a2 2 0 01-2-2z"/></svg></div>
+        <h3>商品・名称使用許諾</h3>
+        <p>他社商品・製品名を広告や比較コンテンツ等で使用する場合の許諾取得と、条件面での折衝を行います。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/><path d="M9 13h6M9 17h6"/></svg></div>
+        <h3>契約書作成・リスク確認</h3>
+        <p>利用許諾契約書のドラフト作成、利用範囲・二次利用条件・炎上リスクの事前チェックまで対応します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="newbiz" class="alt-bg">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">SERVICE 02</span>
+      <h2>新規事業開発</h2>
+      <p>コンテンツ・IPを起点とした新規事業について、企画から立ち上げ・運用設計までを支援します。</p>
+    </div>
+    <div class="grid-services">
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></div>
+        <h3>事業企画・戦略設計</h3>
+        <p>保有・活用可能なコンテンツ／IPを起点に、市場性・収益モデルを踏まえた事業企画と戦略を設計します。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+        <h3>IP活用スキーム構築</h3>
+        <p>IPの権利関係を整理したうえで、ライセンス・グッズ化・コラボ展開など、事業に応じた活用スキームを構築します。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>事業立ち上げ支援</h3>
+        <p>体制構築・スケジュール策定・関係者調整など、新規事業の立ち上げに必要な実務をハンズオンで支援します。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 9v11"/></svg></div>
+        <h3>運用体制・オペレーション設計</h3>
+        <p>立ち上げ後を見据えた業務フロー・運用ルール・KPI設計など、継続運用できる体制づくりを行います。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><path d="M2 21c0-3.3 2.7-6 6-6M22 21c0-3.3-2.7-6-6-6"/><path d="M9 21c0-2.8 2.2-5 5-5"/></svg></div>
+        <h3>パートナー・提携先開拓</h3>
+        <p>事業に必要なライセンサー・制作会社・販路先など、パートナー候補の選定と交渉窓口の橋渡しを行います。</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/><path d="M9 13h6M9 17h6"/></svg></div>
+        <h3>権利処理を織り込んだ事業設計</h3>
+        <p>ライツクリアランスのノウハウを活かし、権利トラブルを未然に防ぐ設計を織り込んだ事業構築が可能です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">FLOW</span>
+      <h2>ご利用の流れ</h2>
+      <p>ご依頼から利用許諾取得まで、平均してご相談から2〜4週間ほどでご案内しています（案件により変動します）。</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h4>ヒアリング</h4>
+        <p>使用したい素材・目的・媒体・期間などをお伺いします。</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h4>権利者調査</h4>
+        <p>対象物の権利関係・権利者・連絡窓口を調査します。</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h4>交渉・条件調整</h4>
+        <p>事業主様に代わり、利用条件・使用料等を交渉します。</p>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <h4>契約書締結</h4>
+        <p>利用許諾契約書を作成し、双方合意のうえ締結します。</p>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <h4>許諾完了・ご報告</h4>
+        <p>許諾取得後、契約書一式をお渡しし完了となります。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">WHY US</span>
+      <h2>布袋屋SEVENが選ばれる理由</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="mark">1</div>
+        <div><h4>権利関係の交渉実績</h4><p>人物・著作権・商標など多様な権利者との交渉ノウハウを蓄積しています。</p></div>
+      </div>
+      <div class="why-item">
+        <div class="mark">2</div>
+        <div><h4>スピード対応</h4><p>広告スケジュールに合わせ、優先度をつけた迅速な調査・交渉を行います。</p></div>
+      </div>
+      <div class="why-item">
+        <div class="mark">3</div>
+        <div><h4>適正な契約書作成</h4><p>利用範囲・期間・二次利用条件を明確にした契約書で、後々のトラブルを防ぎます。</p></div>
+      </div>
+      <div class="why-item">
+        <div class="mark">4</div>
+        <div><h4>幅広いネットワーク</h4><p>事務所・権利管理団体・法人窓口など、各種権利者との連絡ルートを保有しています。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="company" class="alt-bg">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">COMPANY</span>
+      <h2>会社情報</h2>
+    </div>
+    <div class="company-wrap company-wrap-single">
+      <table class="info-table">
+        <tr><th>会社名</th><td>布袋屋SEVEN合同会社</td></tr>
+        <tr><th>所在地</th><td>東京都調布市</td></tr>
+        <tr><th>電話番号</th><td>080-3317-3181</td></tr>
+        <tr><th>営業時間</th><td>平日 10:00〜18:00（土日祝休み）</td></tr>
+        <tr><th>メール</th><td>kudo.hotei7@gmail.com</td></tr>
+        <tr><th>事業内容</th><td>①ライツクリアランス業務（肖像権・著作権・商標・IPライセンス交渉代行）<br>②新規事業開発（コンテンツ・IPを活用した新規事業の立ち上げ・運用設計支援）</td></tr>
+      </table>
+    </div>
+    <p class="note">※ 番地・建物名など詳細住所、営業時間は仮の情報です。実際の情報に差し替えてください。</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">CONTACT</span>
+      <h2>お問い合わせ</h2>
+      <p>クリアランスのご相談・お見積りは無料です。お気軽にお問い合わせください。</p>
+    </div>
+    <div class="contact-wrap">
+      <div id="formMsg" class="ok"></div>
+      <form id="contactForm">
+        <div class="two-col">
+          <div class="form-row">
+            <label for="name">お名前 <span style="color:#c0392b">*</span></label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-row">
+            <label for="company">会社名</label>
+            <input type="text" id="company" name="company">
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="form-row">
+            <label for="email">メールアドレス <span style="color:#c0392b">*</span></label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-row">
+            <label for="tel">電話番号</label>
+            <input type="tel" id="tel" name="tel">
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="category">お問い合わせ内容</label>
+          <select id="category" name="category">
+            <optgroup label="ライツクリアランス">
+              <option>肖像権クリアランスについて</option>
+              <option>著作権クリアランスについて</option>
+              <option>商標・ブランド利用について</option>
+              <option>キャラクター・IPライセンスについて</option>
+            </optgroup>
+            <optgroup label="新規事業開発">
+              <option>新規事業の企画・戦略設計について</option>
+              <option>IP活用スキーム構築について</option>
+              <option>事業立ち上げ・運用設計について</option>
+            </optgroup>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="message">お問い合わせ詳細 <span style="color:#c0392b">*</span></label>
+          <textarea id="message" name="message" required placeholder="使用したい素材・媒体・利用期間などをご記入ください"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">送信する</button>
+        <p class="form-note">送信ボタンを押すとお使いのメールソフトが起動し、内容が入力された状態でメールを送信できます。</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">布袋屋SEVEN</div>
+      <div style="font-size:.82rem;">ライツクリアランス &amp; 新規事業開発</div>
+    </div>
+    <div class="footer-links">
+      <a href="#pillars">事業内容</a>
+      <a href="#service">ライツクリアランス</a>
+      <a href="#newbiz">新規事業開発</a>
+      <a href="#why">選ばれる理由</a>
+      <a href="#company">会社情報</a>
+      <a href="#contact">お問い合わせ</a>
+    </div>
+  </div>
+  <p class="copyright">&copy; 2026 布袋屋SEVEN合同会社. All rights reserved.</p>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const mainNav = document.getElementById('mainNav');
+  navToggle.addEventListener('click', () => mainNav.classList.toggle('open'));
+  mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mainNav.classList.remove('open')));
+
+  const form = document.getElementById('contactForm');
+  const formMsg = document.getElementById('formMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const company = document.getElementById('company').value;
+    const email = document.getElementById('email').value;
+    const tel = document.getElementById('tel').value;
+    const category = document.getElementById('category').value;
+    const message = document.getElementById('message').value;
+
+    const subject = encodeURIComponent('【お問い合わせ】' + category);
+    const body = encodeURIComponent(
+      'お名前: ' + name + '\n' +
+      '会社名: ' + company + '\n' +
+      'メール: ' + email + '\n' +
+      '電話番号: ' + tel + '\n' +
+      'お問い合わせ内容: ' + category + '\n\n' +
+      '詳細:\n' + message
+    );
+    window.location.href = 'mailto:kudo.hotei7@gmail.com?subject=' + subject + '&body=' + body;
+
+    formMsg.textContent = 'メールソフトを起動しました。内容をご確認のうえ送信してください。';
+    formMsg.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
